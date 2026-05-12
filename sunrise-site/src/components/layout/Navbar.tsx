@@ -3,19 +3,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-
-const navLinks = [
-  { label: "Projects", href: "#projects" },
-  { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#education" },
-  { label: "Materials", href: "#materials" },
-  { label: "Contact", href: "#cta" },
-];
+import { SITE, NAV_LINKS } from "@/config/site";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -27,6 +22,9 @@ export function Navbar() {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
+
+  // Close drawer on route change
+  useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
     <>
@@ -45,23 +43,29 @@ export function Navbar() {
         <div className="container-site flex items-center justify-between">
           <a
             href="/"
-            aria-label="Sunrise Constructions — Home"
-            className="flex flex-col leading-none group"
+            aria-label={`${SITE.name} — Home`}
+            className="flex flex-col leading-none"
           >
-            <span className="font-display text-xl font-medium text-brand-cream tracking-wide group-hover:text-brand-gold transition-colors duration-300">
-              Sunrise
+            <span className="font-display text-xl font-medium text-brand-cream tracking-wide">
+              {SITE.shortName}
             </span>
             <span className="font-body text-[9px] tracking-[0.3em] uppercase text-brand-gold mt-0.5">
-              Constructions & Interiors
+              {SITE.tagline}
             </span>
           </a>
 
           <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-            {navLinks.map((link) => (
+            {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="font-body text-sm text-brand-muted hover:text-brand-cream transition-colors duration-200 tracking-wide"
+                aria-current={pathname === link.href ? "page" : undefined}
+                className={cn(
+                  "font-body text-sm tracking-wide transition-colors duration-200",
+                  pathname === link.href
+                    ? "text-brand-gold"
+                    : "text-brand-muted"
+                )}
               >
                 {link.label}
               </a>
@@ -70,18 +74,19 @@ export function Navbar() {
 
           <div className="flex items-center gap-3">
             <a
-              href="tel:+919876543210"
+              href={`tel:${SITE.phone.tel}`}
               aria-label="Call us"
-              className="hidden md:flex items-center gap-2 text-brand-gold border border-brand-gold/30 rounded-full px-4 py-2 text-xs font-body hover:bg-brand-gold hover:text-brand-dark transition-all duration-300"
+              className="hidden md:flex items-center gap-2 text-brand-gold border border-brand-gold/30 rounded-full px-4 py-2 text-xs font-body"
             >
-              <Phone size={13} />
-              <span>+91 98765 43210</span>
+              <Phone size={13} aria-hidden="true" />
+              <span>{SITE.phone.display}</span>
             </a>
             <button
               onClick={() => setOpen(true)}
-              className="md:hidden p-2 text-brand-cream hover:text-brand-gold transition-colors"
+              className="md:hidden p-2 text-brand-cream"
               aria-label="Open menu"
               aria-expanded={open}
+              aria-controls="mobile-nav"
             >
               <Menu size={22} />
             </button>
@@ -102,6 +107,7 @@ export function Navbar() {
               onClick={() => setOpen(false)}
             />
             <motion.nav
+              id="mobile-nav"
               key="drawer"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -112,22 +118,25 @@ export function Navbar() {
             >
               <button
                 onClick={() => setOpen(false)}
-                className="absolute top-5 right-5 p-2 text-brand-cream hover:text-brand-gold transition-colors"
+                className="absolute top-5 right-5 p-2 text-brand-cream"
                 aria-label="Close menu"
               >
                 <X size={22} />
               </button>
 
               <div className="flex flex-col gap-6 mt-4">
-                {navLinks.map((link, i) => (
+                {NAV_LINKS.map((link, i) => (
                   <motion.a
                     key={link.label}
                     href={link.href}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.06 }}
-                    onClick={() => setOpen(false)}
-                    className="font-display text-2xl font-light text-brand-cream hover:text-brand-gold transition-colors duration-200"
+                    aria-current={pathname === link.href ? "page" : undefined}
+                    className={cn(
+                      "font-display text-2xl font-light",
+                      pathname === link.href ? "text-brand-gold" : "text-brand-cream"
+                    )}
                   >
                     {link.label}
                   </motion.a>
@@ -136,15 +145,13 @@ export function Navbar() {
 
               <div className="mt-auto pt-8 border-t border-brand-border">
                 <a
-                  href="tel:+919876543210"
+                  href={`tel:${SITE.phone.tel}`}
                   className="flex items-center gap-3 text-brand-gold font-body text-sm"
                 >
-                  <Phone size={16} />
-                  +91 98765 43210
+                  <Phone size={16} aria-hidden="true" />
+                  {SITE.phone.display}
                 </a>
-                <p className="mt-2 text-brand-muted text-xs font-body">
-                  Mon–Sat, 9AM–7PM
-                </p>
+                <p className="mt-2 text-brand-muted text-xs font-body">{SITE.hours}</p>
               </div>
             </motion.nav>
           </>

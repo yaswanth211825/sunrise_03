@@ -5,21 +5,39 @@ import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
   eyebrow?: string;
+  /** Plain text title */
   title: string;
+  /** Optional word or phrase inside the title rendered in gold italic */
+  highlight?: string;
   subtitle?: string;
   align?: "left" | "center";
   className?: string;
   titleClassName?: string;
+  /** The heading level to render — defaults to h2 */
+  as?: "h1" | "h2" | "h3";
+  id?: string;
 }
 
 export function SectionHeader({
   eyebrow,
   title,
+  highlight,
   subtitle,
   align = "left",
   className,
   titleClassName,
+  as: Tag = "h2",
+  id,
 }: SectionHeaderProps) {
+  const titleContent = highlight ? (
+    <>
+      {title}{" "}
+      <em className="text-gradient-gold not-italic">{highlight}</em>
+    </>
+  ) : (
+    title
+  );
+
   return (
     <div className={cn(align === "center" && "text-center", className)}>
       {eyebrow && (
@@ -33,17 +51,22 @@ export function SectionHeader({
           {eyebrow}
         </motion.p>
       )}
-      <motion.h2
+      <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className={cn(
-          "font-display text-4xl md:text-5xl lg:text-6xl font-light text-brand-cream leading-[1.05]",
-          titleClassName
-        )}
-        dangerouslySetInnerHTML={{ __html: title }}
-      />
+      >
+        <Tag
+          id={id}
+          className={cn(
+            "font-display text-4xl md:text-5xl lg:text-6xl font-light text-brand-cream leading-[1.05]",
+            titleClassName
+          )}
+        >
+          {titleContent}
+        </Tag>
+      </motion.div>
       {subtitle && (
         <motion.p
           initial={{ opacity: 0, y: 12 }}

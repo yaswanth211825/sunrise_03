@@ -16,6 +16,18 @@ interface GoldButtonProps {
   icon?: ReactNode;
 }
 
+const sizeClasses = {
+  sm: "px-5 py-2.5 text-xs",
+  md: "px-7 py-3.5 text-sm",
+  lg: "px-9 py-4 text-base",
+};
+
+const variantClasses = {
+  solid: "bg-brand-gold text-brand-dark",
+  outline: "border border-brand-gold text-brand-gold",
+  ghost: "text-brand-gold",
+};
+
 export function GoldButton({
   children,
   variant = "solid",
@@ -27,22 +39,8 @@ export function GoldButton({
   disabled,
   icon,
 }: GoldButtonProps) {
-  const sizeClasses = {
-    sm: "px-5 py-2.5 text-xs",
-    md: "px-7 py-3.5 text-sm",
-    lg: "px-9 py-4 text-base",
-  };
-
-  const variantClasses = {
-    solid:
-      "bg-brand-gold text-brand-dark hover:bg-brand-gold-light active:bg-brand-gold-dark",
-    outline:
-      "border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark",
-    ghost: "text-brand-gold hover:text-brand-gold-light",
-  };
-
   const baseClass = cn(
-    "inline-flex items-center justify-center gap-2.5 font-body font-medium tracking-wide rounded-full transition-all duration-300 cursor-pointer select-none",
+    "inline-flex items-center justify-center gap-2.5 font-body font-medium tracking-wide rounded-full cursor-pointer select-none",
     sizeClasses[size],
     variantClasses[variant],
     disabled && "opacity-50 pointer-events-none",
@@ -52,18 +50,13 @@ export function GoldButton({
   const content = (
     <>
       {children}
-      {icon && <span className="transition-transform duration-300 group-hover:translate-x-1">{icon}</span>}
+      {icon && <span>{icon}</span>}
     </>
   );
 
   if (href) {
     return (
-      <motion.a
-        href={href}
-        className={cn(baseClass, "group")}
-        whileTap={{ scale: 0.97 }}
-        whileHover={{ scale: 1.02 }}
-      >
+      <motion.a href={href} className={baseClass} whileTap={{ scale: 0.97 }}>
         {content}
       </motion.a>
     );
@@ -74,9 +67,8 @@ export function GoldButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={cn(baseClass, "group")}
+      className={baseClass}
       whileTap={{ scale: 0.97 }}
-      whileHover={{ scale: 1.02 }}
     >
       {content}
     </motion.button>

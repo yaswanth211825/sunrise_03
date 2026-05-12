@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { GoldButton } from "@/components/ui/GoldButton";
+import { SITE } from "@/config/site";
 
 const stats = [
-  { value: "200+", label: "Projects Delivered" },
-  { value: "12+", label: "Years of Practice" },
-  { value: "4.9★", label: "Client Rating" },
+  { value: SITE.stats.projects, label: "Projects Delivered" },
+  { value: SITE.stats.years, label: "Years of Practice" },
+  { value: SITE.stats.rating, label: "Client Rating" },
   { value: "0", label: "Hidden Costs" },
 ];
 
@@ -28,13 +29,9 @@ export function HeroSection() {
     <section
       ref={containerRef}
       className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden"
-      aria-label="Hero — Sunrise Constructions"
+      aria-labelledby="hero-heading"
     >
-      {/* Background image with parallax */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{ y: imageY }}
-      >
+      <motion.div className="absolute inset-0 z-0" style={{ y: imageY }}>
         <Image
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=85"
           alt="Premium luxury residence built by Sunrise Constructions, Hyderabad"
@@ -43,13 +40,11 @@ export function HeroSection() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        {/* Multi-layer cinematic overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/60 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-brand-dark/20" />
       </motion.div>
 
-      {/* Content */}
       <motion.div
         className="relative z-10 container-site pb-20 md:pb-28 pt-32"
         style={{ y: textY, opacity }}
@@ -61,10 +56,11 @@ export function HeroSection() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="font-body text-xs tracking-[0.25em] uppercase text-brand-gold mb-6"
           >
-            Hyderabad · Established 2012
+            {SITE.city} · Established {SITE.established}
           </motion.p>
 
           <motion.h1
+            id="hero-heading"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -98,18 +94,17 @@ export function HeroSection() {
             <GoldButton
               variant="solid"
               size="lg"
-              href="#projects"
+              href="/projects"
               icon={<ArrowRight size={16} />}
             >
               Explore Projects
             </GoldButton>
-            <GoldButton variant="outline" size="lg" href="#cta">
+            <GoldButton variant="outline" size="lg" href="/contact">
               Book Consultation
             </GoldButton>
           </motion.div>
         </div>
 
-        {/* Stats bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,7 +124,6 @@ export function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -1,4 +1,5 @@
 import { MapPin, Phone, Mail, Share2, Link2 } from "lucide-react";
+import { SITE, NAV_LINKS } from "@/config/site";
 
 export function Footer() {
   return (
@@ -11,10 +12,10 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="mb-5">
               <span className="font-display text-2xl font-medium text-brand-cream block">
-                Sunrise
+                {SITE.shortName}
               </span>
               <span className="font-body text-[10px] tracking-[0.3em] uppercase text-brand-gold">
-                Constructions & Interiors
+                {SITE.tagline}
               </span>
             </div>
             <p className="font-body text-sm text-brand-muted leading-relaxed max-w-sm">
@@ -24,22 +25,22 @@ export function Footer() {
             </p>
             <div className="flex gap-4 mt-6">
               <a
-                href="https://instagram.com/sunriseconstructions"
+                href={SITE.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
-                className="w-9 h-9 rounded-full border border-brand-border flex items-center justify-center text-brand-muted hover:text-brand-gold hover:border-brand-gold transition-all duration-300"
+                className="w-9 h-9 rounded-full border border-brand-border flex items-center justify-center text-brand-muted"
               >
-                <Share2 size={15} />
+                <Share2 size={15} aria-hidden="true" />
               </a>
               <a
-                href="https://facebook.com/sunriseconstructions"
+                href={SITE.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Facebook"
-                className="w-9 h-9 rounded-full border border-brand-border flex items-center justify-center text-brand-muted hover:text-brand-gold hover:border-brand-gold transition-all duration-300"
+                className="w-9 h-9 rounded-full border border-brand-border flex items-center justify-center text-brand-muted"
               >
-                <Link2 size={15} />
+                <Link2 size={15} aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -49,20 +50,13 @@ export function Footer() {
               Services
             </h3>
             <ul className="space-y-3">
-              {[
-                "Turnkey Construction",
-                "Interior Design",
-                "Renovation",
-                "Architecture",
-                "Modular Interiors",
-                "Commercial Spaces",
-              ].map((s) => (
-                <li key={s}>
+              {NAV_LINKS.map((link) => (
+                <li key={link.label}>
                   <a
-                    href="#services"
-                    className="font-body text-sm text-brand-muted hover:text-brand-cream transition-colors duration-200"
+                    href={link.href}
+                    className="font-body text-sm text-brand-muted"
                   >
-                    {s}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -76,37 +70,28 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="tel:+919876543210"
-                  className="flex items-start gap-3 text-brand-muted hover:text-brand-cream transition-colors duration-200 group"
+                  href={`tel:${SITE.phone.tel}`}
+                  className="flex items-start gap-3 text-brand-muted"
                 >
-                  <Phone
-                    size={14}
-                    className="mt-0.5 shrink-0 group-hover:text-brand-gold transition-colors"
-                  />
-                  <span className="font-body text-sm">+91 98765 43210</span>
+                  <Phone size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
+                  <span className="font-body text-sm">{SITE.phone.display}</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:hello@sunriseconstructions.in"
-                  className="flex items-start gap-3 text-brand-muted hover:text-brand-cream transition-colors duration-200 group"
+                  href={`mailto:${SITE.email}`}
+                  className="flex items-start gap-3 text-brand-muted"
                 >
-                  <Mail
-                    size={14}
-                    className="mt-0.5 shrink-0 group-hover:text-brand-gold transition-colors"
-                  />
-                  <span className="font-body text-sm">
-                    hello@sunriseconstructions.in
-                  </span>
+                  <Mail size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
+                  <span className="font-body text-sm">{SITE.email}</span>
                 </a>
               </li>
               <li>
                 <div className="flex items-start gap-3 text-brand-muted">
-                  <MapPin size={14} className="mt-0.5 shrink-0" />
+                  <MapPin size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
                   <span className="font-body text-sm leading-relaxed">
-                    42, Jubilee Hills Road No. 10,
-                    <br />
-                    Hyderabad, Telangana 500033
+                    {SITE.address.street},<br />
+                    {SITE.address.city}, {SITE.address.state} {SITE.address.pin}
                   </span>
                 </div>
               </li>
@@ -116,10 +101,10 @@ export function Footer() {
 
         <div className="border-t border-brand-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="font-body text-xs text-brand-muted">
-            © {new Date().getFullYear()} Sunrise Constructions & Interiors. All rights reserved.
+            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </p>
           <p className="font-body text-xs text-brand-muted">
-            Hyderabad · Secunderabad · Bangalore
+            {SITE.city} · Secunderabad · Bangalore
           </p>
         </div>
       </div>
