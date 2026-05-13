@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Building2, Paintbrush2, Wrench, Compass, LayoutGrid, Store, Check, ChevronDown,
@@ -46,65 +47,81 @@ export function ServicesSection() {
                 transition={{ duration: 0.5, delay: i * 0.07 }}
               >
                 <div
-                  className={`glass-card rounded-[1.25rem] p-7 ${
+                  className={`glass-card rounded-[1.25rem] overflow-hidden ${
                     isOpen ? "border-brand-gold/40" : ""
                   }`}
                 >
-                  <div className="flex items-start justify-between mb-6">
-                    <div
-                      className="w-12 h-12 rounded-xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center"
-                      aria-hidden="true"
-                    >
-                      {Icon && <Icon size={20} className="text-brand-gold" />}
-                    </div>
-                    <button
-                      onClick={() => setActive(isOpen ? null : service.id)}
-                      aria-expanded={isOpen}
-                      aria-controls={`features-${service.id}`}
-                      aria-label={`${isOpen ? "Collapse" : "Expand"} ${service.title} details`}
-                      className="p-1 text-brand-muted bg-transparent border-none cursor-pointer"
-                    >
-                      <ChevronDown
-                        size={16}
-                        className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                        aria-hidden="true"
+                  {service.image && (
+                    <div className="relative h-44 w-full overflow-hidden">
+                      <Image
+                        src={service.image}
+                        alt={`${service.title} — on-site process`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        loading="lazy"
                       />
-                    </button>
-                  </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-brand-card/80 to-transparent" />
+                    </div>
+                  )}
 
-                  <h3 className="font-display text-xl font-medium text-brand-cream mb-1 leading-tight">
-                    {service.title}
-                  </h3>
-                  <p className="font-body text-xs text-brand-gold tracking-wide mb-3">
-                    {service.subtitle}
-                  </p>
-                  <p className="font-body text-sm text-brand-muted leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.ul
-                        id={`features-${service.id}`}
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="mt-5 space-y-2.5 overflow-hidden border-t border-brand-border pt-5"
+                  <div className="p-7">
+                    <div className="flex items-start justify-between mb-6">
+                      <div
+                        className="w-12 h-12 rounded-xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center"
+                        aria-hidden="true"
                       >
-                        {service.features.map((feat) => (
-                          <li key={feat} className="flex items-start gap-2.5">
-                            <Check
-                              size={13}
-                              className="text-brand-gold mt-0.5 shrink-0"
-                              aria-hidden="true"
-                            />
-                            <span className="font-body text-sm text-brand-muted">{feat}</span>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
+                        {Icon && <Icon size={20} className="text-brand-gold" />}
+                      </div>
+                      <button
+                        onClick={() => setActive(isOpen ? null : service.id)}
+                        aria-expanded={isOpen}
+                        aria-controls={`features-${service.id}`}
+                        aria-label={`${isOpen ? "Collapse" : "Expand"} ${service.title} details`}
+                        className="p-1 text-brand-muted bg-transparent border-none cursor-pointer"
+                      >
+                        <ChevronDown
+                          size={16}
+                          className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
+
+                    <h3 className="font-display text-xl font-medium text-brand-cream mb-1 leading-tight">
+                      {service.title}
+                    </h3>
+                    <p className="font-body text-xs text-brand-gold tracking-wide mb-3">
+                      {service.subtitle}
+                    </p>
+                    <p className="font-body text-sm text-brand-muted leading-relaxed">
+                      {service.description}
+                    </p>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.ul
+                          id={`features-${service.id}`}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-5 space-y-2.5 overflow-hidden border-t border-brand-border pt-5"
+                        >
+                          {service.features.map((feat) => (
+                            <li key={feat} className="flex items-start gap-2.5">
+                              <Check
+                                size={13}
+                                className="text-brand-gold mt-0.5 shrink-0"
+                                aria-hidden="true"
+                              />
+                              <span className="font-body text-sm text-brand-muted">{feat}</span>
+                            </li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </motion.div>
             );

@@ -6,6 +6,7 @@ export interface Service {
   features: string[];
   icon: string;
   gradient: string;
+  image?: string;
 }
 
 export const services: Service[] = [
@@ -24,6 +25,7 @@ export const services: Service[] = [
     ],
     icon: "Building2",
     gradient: "from-amber-900/20 to-brand-card",
+    image: "/images/process/site-team-review.png",
   },
   {
     id: "interior",
@@ -40,6 +42,7 @@ export const services: Service[] = [
     ],
     icon: "Paintbrush2",
     gradient: "from-stone-800/20 to-brand-card",
+    image: "/images/process/modular-cabinet-leveling.png",
   },
   {
     id: "renovation",
@@ -56,6 +59,7 @@ export const services: Service[] = [
     ],
     icon: "Wrench",
     gradient: "from-zinc-800/20 to-brand-card",
+    image: "/images/process/waterproofing-membrane.png",
   },
   {
     id: "architecture",
@@ -72,6 +76,7 @@ export const services: Service[] = [
     ],
     icon: "Compass",
     gradient: "from-neutral-800/20 to-brand-card",
+    image: "/images/process/false-ceiling-installation.png",
   },
   {
     id: "modular",
@@ -88,6 +93,7 @@ export const services: Service[] = [
     ],
     icon: "LayoutGrid",
     gradient: "from-yellow-900/20 to-brand-card",
+    image: "/images/process/modular-kitchen-installation.png",
   },
   {
     id: "commercial",
