@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin, Ruler } from "lucide-react";
 import { featuredProjects } from "@/data/projects";
@@ -59,10 +60,11 @@ export function FeaturedProjectsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: i * 0.08 }}
-            className="shrink-0 w-[85vw] sm:w-[420px] md:w-[400px] glass-card rounded-[1.25rem] overflow-hidden"
+            className="shrink-0 w-[85vw] sm:w-[420px] md:w-[400px]"
             style={{ scrollSnapAlign: "start" }}
             role="listitem"
           >
+          <Link href={`/projects/${project.id}`} className="block glass-card rounded-[1.25rem] overflow-hidden" aria-label={`View ${project.title} project`}>
             <div className="relative h-[260px] md:h-[280px] overflow-hidden">
               <Image
                 src={project.image}
@@ -116,6 +118,7 @@ export function FeaturedProjectsSection() {
                 ))}
               </div>
             </div>
+          </Link>
           </motion.article>
         ))}
       </div>
