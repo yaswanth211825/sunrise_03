@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { Layers, Grid3x3, Paintbrush2, Droplets } from "lucide-react";
 import { materialCategories, type MaterialItem } from "@/data/materials";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -125,20 +126,56 @@ export function MaterialIntelligenceSection() {
           })}
         </div>
 
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+        <div
           id={`panel-${activeTab}`}
           role="tabpanel"
           aria-labelledby={`tab-${activeTab}`}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         >
-          {activeCategory.items.map((item) => (
-            <MaterialCard key={item.name} item={item} />
-          ))}
-        </motion.div>
+          <AnimatePresence mode="wait">
+            {activeCategory.image && (
+              <motion.div
+                key={`img-${activeTab}`}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.35 }}
+                className="mb-6 overflow-hidden rounded-2xl"
+              >
+                <div className="relative h-52 md:h-64 w-full">
+                  <Image
+                    src={activeCategory.image}
+                    alt={activeCategory.imageAlt ?? activeCategory.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 80vw"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-card/70 to-transparent" />
+                  <div className="absolute bottom-5 left-6">
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-brand-gold mb-1">
+                      {activeCategory.title}
+                    </p>
+                    <p className="font-display text-lg text-brand-cream max-w-xs leading-snug">
+                      {activeCategory.imageAlt}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+          >
+            {activeCategory.items.map((item) => (
+              <MaterialCard key={item.name} item={item} />
+            ))}
+          </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

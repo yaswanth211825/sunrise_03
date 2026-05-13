@@ -2,6 +2,8 @@ export interface MaterialCategory {
   id: string;
   title: string;
   icon: string;
+  image?: string;
+  imageAlt?: string;
   items: MaterialItem[];
 }
 
@@ -19,6 +21,8 @@ export const materialCategories: MaterialCategory[] = [
     id: "plywood",
     title: "Plywood & Boards",
     icon: "Layers",
+    image: "/images/materials/bwp-plywood-layers.jpg",
+    imageAlt: "BWP plywood cross-section showing the dense layered veneer construction",
     items: [
       {
         name: "BWP (Boiling Waterproof)",
@@ -50,6 +54,8 @@ export const materialCategories: MaterialCategory[] = [
     id: "tiles",
     title: "Floor & Wall Tiles",
     icon: "Grid3x3",
+    image: "/images/materials/marble-veining-closeup.png",
+    imageAlt: "Premium Italian marble slab with dramatic natural veining — wet polished surface",
     items: [
       {
         name: "Vitrified Tiles (GVT/PGVT)",
@@ -87,6 +93,8 @@ export const materialCategories: MaterialCategory[] = [
     id: "paints",
     title: "Paints & Finishes",
     icon: "Paintbrush2",
+    image: "/images/materials/stone-cladding-texture.jpg",
+    imageAlt: "Layered natural sandstone texture with warm earthy tones — exterior surface quality",
     items: [
       {
         name: "Exterior Acrylic Emulsion",
@@ -115,6 +123,8 @@ export const materialCategories: MaterialCategory[] = [
     id: "waterproofing",
     title: "Waterproofing Systems",
     icon: "Droplets",
+    image: "/images/process/waterproofing-membrane.png",
+    imageAlt: "Black waterproofing membrane being applied to bathroom floor before tiling",
     items: [
       {
         name: "Crystalline Waterproofing",
