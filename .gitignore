@@ -1,0 +1,5 @@
+# Claude Code — local tooling only, never push
+.claude/
+
+# macOS
+.DS_Store
